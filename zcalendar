@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OAuth Callback</title>
+</head>
+<body>
+    <h1>Authentication Successful</h1>
+    <p>You can close this window and return to the widget.</p>
+    <script>
+        // Get the authorization code from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        
+        if (code) {
+            // Store the code in localStorage
+            localStorage.setItem('zoho_auth_code', code);
+            // Notify the main widget (if it's open)
+            if (window.opener) {
+                window.opener.postMessage({ type: 'zoho_oauth_callback', code: code }, '*');
+            }
+        }
+    </script>
+</body>
+</html>
